@@ -15,6 +15,8 @@ app = Flask(__name__)
 app.config.from_pyfile('app.cfg')
 app.jinja_env.filters['timesince'] = timesince
 app.jinja_env.filters['get_user'] = get_user
+app.jinja_env.filters['get_comment_count'] = get_comment_count
+app.jinja_env.filters['get_blog_comments'] = get_blog_comments
 
 def connect_db():
     """Returns a new connection to the database."""
@@ -67,6 +69,18 @@ def add_entry():
         g.db.commit()
         flash('New entry was successfully posted')
 
+    return redirect(url_for('show_entries'))
+
+
+@app.route('/comment', methods=['POST'])
+@login_required
+def comment():
+    if request.method == 'POST':
+        text = request.form.get('comment');
+        uid = session.get('u_id')
+        blog_id = request.form.get('blog_id')
+        create_blog_commment(text,blog_id,uid)
+        flash('Your comment has been successfully added')
     return redirect(url_for('show_entries'))
 
 
@@ -157,6 +171,7 @@ def register():
 def logout():
     """ Remove user session and logs a user out """
     session.pop('logged_in', None)
+    session.pop('u_id', None)
     flash('You were logged out')
     return redirect(url_for('show_entries'))
 

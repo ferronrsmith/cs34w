@@ -11,6 +11,7 @@
     <a href="{{ url_for('login') }}">log in</a>
     <a href="{{ url_for('register') }}">register</a>
   {% else %}
+      {% block url %}{% endblock %}
     <a href="{{ url_for('logout') }}">log out</a>
   {% endif %}
   </div>

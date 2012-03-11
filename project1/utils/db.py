@@ -1,5 +1,6 @@
 from flask.globals import g
 from werkzeug.security import generate_password_hash
+from datetime import datetime
 
 def user_exists(username):
     """ The following function checks if a user exists in the db """
@@ -28,20 +29,21 @@ def get_blog_post(id):
     row = cur.fetchone()
     if row :
         return dict(title=row[0], desc=row[1], date_created=row[2],last_modified=row[3],
-            tags=row[4], id=row[5], uid=row[6], desc_enc=row[7])
+            tags=row[4], id=row[5], uid=row[6], desc_enc=row[7], comments=get_blog_comments(id))
 
 
 def get_comment_count(blog_id):
-    cur = g.db.execute('select * from comments where id = (?)', [id])
-    return cur.rowcount
+    cur = g.db.execute('select count(*) as count from comments where blog_id = (?)', [blog_id])
+    return cur.fetchone()[0]
 
 def create_blog_commment(text,blog_id,user_id):
-    cur = g.db.execute('insert into comments (comments,date_created,user_id,blog_id)'
-                       ' values (?,?,?,?)', [text,datetime.now(),user_id,blog_id])
-    g.db.commit()
+   g.db.execute('insert into comments (comments,date_created,user_id,blog_id)'
+                ' values (?,?,?,?)', [text,datetime.now(),user_id,blog_id])
+   g.db.commit()
 
 
 def get_blog_comments(blog_id):
-    cur = g.db.execute('select * from comments where id = (?)', [id])
+    cur = g.db.execute('select * from comments where blog_id = (?)', [blog_id])
     comments = [dict(text=row[1],date=row[2],uid=row[3],blog_id=row[4]) for row in cur.fetchall()]
+    print comments
     return comments

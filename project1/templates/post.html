@@ -34,11 +34,32 @@
 <ul class=entries>
     {% if post %}
     <li><h2>{{ post.title }}</h2>
-        <em> postd by {{ post.uid | get_user }} {{ post.date_created | timesince }}</em><br/>
+        <em class="posted_by"> post by {{ post.uid | get_user }} {{ post.date_created | timesince }}</em><br/>
 
         {{ post.desc|safe }}
         {% else %}
     <li><em>Blog post not found!</em>
     {% endif %}
 </ul>
+    {% if post %}
+        <div class="commentsHead">comment</div>
+        <br />
+        {% for comment in post.comments %}
+            <div class="commentTitle">Re: {{ post.title }}</div>
+            <em>{{ comment.text }}</em> <br />
+            <em class="commentsDate"> post by {{ comment.uid | get_user }} {{ comment.date | timesince }}</em><br/>
+            <br />
+        {% endfor %}
+        <br />
+{% if session.logged_in %}
+    <form action="{{ url_for('comment') }}" method="post">
+       <dl>
+        <dt class="comments">Add Comment</dt>
+        <dd class="rem_margin"><textarea id=comments name=comment rows=3 cols=40></textarea></dd>
+        <dd><input id="blog_id" name=blog_id value="{{ post.id }}" type=hidden></dd>
+        <dd class="rem_margin"><input id="btnPost" type=submit value=Post></dd>
+       </dl>
+    </form>
+{% endif %}
+    {% endif %}
 {% endblock %}
