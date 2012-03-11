@@ -33,16 +33,19 @@ def get_blog_post(id):
 
 
 def get_comment_count(blog_id):
+    """ The following method returns the count of comment for a following blog <id>  """
     cur = g.db.execute('select count(*) as count from comments where blog_id = (?)', [blog_id])
     return cur.fetchone()[0]
 
-def create_blog_commment(text,blog_id,user_id):
+def create_blog_comment(text,blog_id,user_id):
+   """ The following method creates a blog post comment """
    g.db.execute('insert into comments (comments,date_created,user_id,blog_id)'
                 ' values (?,?,?,?)', [text,datetime.now(),user_id,blog_id])
    g.db.commit()
 
 
 def get_blog_comments(blog_id):
+    """ The following method retrieve comments for a blog  """
     cur = g.db.execute('select * from comments where blog_id = (?)', [blog_id])
     comments = [dict(text=row[1],date=row[2],uid=row[3],blog_id=row[4]) for row in cur.fetchall()]
     print comments

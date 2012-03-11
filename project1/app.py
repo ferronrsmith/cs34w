@@ -3,10 +3,9 @@
 """
 from __future__ import with_statement
 import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort,\
+from flask import Flask, request, session, redirect, url_for,\
     render_template, flash
 from werkzeug.security import check_password_hash
-from datetime import datetime
 
 from utils.snippets import timesince, login_required
 from utils.db  import *
@@ -75,11 +74,12 @@ def add_entry():
 @app.route('/comment', methods=['POST'])
 @login_required
 def comment():
+    """ adds a blog comment """
     if request.method == 'POST':
-        text = request.form.get('comment');
+        text = request.form.get('comment')
         uid = session.get('u_id')
         blog_id = request.form.get('blog_id')
-        create_blog_commment(text,blog_id,uid)
+        create_blog_comment(text,blog_id,uid)
         flash('Your comment has been successfully added')
     return redirect(url_for('show_entries'))
 
@@ -87,16 +87,19 @@ def comment():
 @app.route('/delete/<id>')
 @login_required
 def delete(id):
-        cur = g.db.execute('delete from blog where id = ?', [id])
-        g.db.commit()
-        flash('Blog post successfully deleted')
-        return redirect(url_for('show_entries'))
+    """ delete a blog post"""
+    g.db.execute('delete from comments where blog_id = ?', [id])
+    g.db.execute('delete from blog where id = ?', [id])
+    g.db.commit()
+    flash('Blog post successfully deleted')
+    return redirect(url_for('show_entries'))
 
 
 @app.route('/update', methods=['POST'])
 @app.route('/update/<id>', methods=['GET'])
 @login_required
 def update(id=0):
+    """ update blog post """
     if request.method == 'GET':
         return render_template('update.html', post=get_blog_post(id))
 
