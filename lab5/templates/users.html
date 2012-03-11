@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+ {% block body %}
+ <form action="{{ url_for('create') }}" method=post class=add-entry enctype="multipart/form-data">
+    <dl>
+      <dt>Username: 
+      <dd><input type=text size=30 name=username>
+      <dt>Fullname:
+      <dd><input type=text size=30 name=fullname>
+      <dt>Photo:
+      <dd><input type=file name=photo>
+      <dd><input type=submit value=Share>
+    </dl>
+  </form>
+  <h2>List User here:</h2>
+  <ul class=entries>
+{% for user in users %}
+  <li>{{ user.fullname }} <a href="/update/{{ user.username }}">Update User!</a> <a href="/delete/{{ user.username }}">Delete Me!</a>
+  <li> <img src="/uploads/{{ user.photo }}" />
+  <li>{{ user.username }}
+{% else %}
+  <li><em> No users yet</em>
+{% endfor %}
+</ul>
+
+
+  {% endblock %}

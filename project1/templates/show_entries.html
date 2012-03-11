@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <script type="text/javascript">
+
+        $(function(){
+
+            $('form').submit(function(){
+                var desc = $('#description').val();
+
+                // convert url to links
+                $('#desc_enc').val(desc.linkify());
+
+                //submit form
+                //return true;
+
+            });
+
+            //embed videos for embedded vimeo/youtube links via oembed
+            $(".omebed").oembed(null,
+                {
+                    embedMethod: "append",
+                    maxWidth: 1024,
+                    maxHeight: 768,
+                    vimeo: { autoplay: false, maxWidth: 540, maxHeight: 360},
+                    youtube: { autoplay: false, maxWidth: 540, maxHeight: 360}
+                });
+
+
+        });
+
+    </script>
+
+    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+      <dl>
+        <dt>Title:</dt>
+        <dd><input type=text size=30 name=title></dd><br />
+        <dt>Description:</dt>
+        <dd><textarea id=description name=description rows=5 cols=40></textarea></dd><br />
+         <input id="desc_enc" name="desc_enc"  type="hidden">
+         <dt>Tags:</dt>
+        <dd><input id="tags" type="text" name="tags"></dd><br />
+        <dd><input id="btnSubmit" type=submit value=Post></dd>
+      </dl>
+    </form>
+  {% endif %}
+  <ul class=entries>
+  {% for entry in posts %}
+    <li><h2><a href="/post/{{ entry.id }}">{{ entry.title }}</a></h2>
+        <em> postd by {{ entry.uid | get_user }} {{ entry.date_created | timesince }}</em><br/>
+
+        {{ entry.desc|safe }}
+  {% else %}
+    <li><em>No blog post here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

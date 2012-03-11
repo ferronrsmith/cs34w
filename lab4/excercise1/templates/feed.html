@@ -1,0 +1,13 @@
+<!doctype html>
+<title>Twitter Feed Reader</title>
+{% if name %}
+<h1>Hello {{ name['screen_name'] }}!</h1>
+
+<p>Last Tweet:<em> {{ name['status'][] }}</em></p>
+
+
+
+
+{% else %}
+<h1>Hello World!</h1>
+{% endif %}

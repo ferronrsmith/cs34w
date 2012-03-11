@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+
+{% block url %}
+    <a href="{{ url_for('show_entries') }}">main</a>
+{% endblock %}
+
+{% block body %}
+{% if session.logged_in %}
+<script type="text/javascript">
+
+    $(function() {
+        //embed videos for embedded vimeo/youtube links via oembed
+        $(".omebed").oembed(null,
+                {
+                    embedMethod: "append",
+                    maxWidth: 1024,
+                    maxHeight: 768,
+                    vimeo: { autoplay: false, maxWidth: 540, maxHeight: 360},
+                    youtube: { autoplay: false, maxWidth: 540, maxHeight: 360}
+                });
+    });
+
+</script>
+
+{% if post and session.u_id == post.uid %}
+<a href="/update/{{ post.id }}">update</a> | <a href="/delete/{{ post.id }}">delete</a>
+
+{% endif %}
+        {% else %}
+            <a href="{{ url_for('show_entries') }}">home</a>
+{% endif %}
+
+<ul class=entries>
+    {% if post %}
+    <li><h2>{{ post.title }}</h2>
+        <em> postd by {{ post.uid | get_user }} {{ post.date_created | timesince }}</em><br/>
+
+        {{ post.desc|safe }}
+        {% else %}
+    <li><em>Blog post not found!</em>
+    {% endif %}
+</ul>
+{% endblock %}
