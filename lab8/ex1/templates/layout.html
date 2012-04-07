@@ -1,0 +1,14 @@
+<html>
+<head>
+    <script type = "text/javascript" src="/static/js/jquery-1.7.2.js"> </script>
+</head>
+<body>
+ <script type = "text/javascript">
+  $(document).ready(
+    jQuery.getJSON('/hellojson', function (data){
+    //console.log(data)
+    document.write(data.message);
+    }));
+ </script>
+</body>
+</html>

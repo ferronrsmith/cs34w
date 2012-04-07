@@ -53,7 +53,7 @@
     $.fn.oembed.defaults = {
         maxWidth: null,
         maxHeight: null,
-        embedMethod: "replace",  	// "auto", "append", "fill"		
+        embedMethod: "replace",  	// "auto", "append", "fill"
         defaultOEmbedProvider: "oohembed", 	// "oohembed", "embed.ly", "none"
         allowedProviders: null,
         disallowedProviders: null,

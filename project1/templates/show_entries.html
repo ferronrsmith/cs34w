@@ -2,17 +2,11 @@
 {% block body %}
   {% if session.logged_in %}
     <script type="text/javascript">
-
         $(function(){
-
             $('form').submit(function(){
                 var desc = $('#description').val();
-
                 // convert url to links
                 $('#desc_enc').val(desc.linkify());
-
-                //submit form
-                //return true;
 
             });
 
@@ -20,13 +14,11 @@
             $(".omebed").oembed(null,
                 {
                     embedMethod: "append",
-                    maxWidth: 1024,
-                    maxHeight: 768,
+                    maxWidth: 540,
+                    maxHeight: 360,
                     vimeo: { autoplay: false, maxWidth: 540, maxHeight: 360},
                     youtube: { autoplay: false, maxWidth: 540, maxHeight: 360}
                 });
-
-
         });
 
     </script>

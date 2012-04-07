@@ -24,7 +24,7 @@
 </script>
 
 {% if post and session.u_id == post.uid %}
-<a href="/update/{{ post.id }}">update</a> | <a href="/delete/{{ post.id }}">delete</a>
+<a href="/edit/{{ post.id }}">edit</a> | <a href="/delete/{{ post.id }}">delete</a>
 
 {% endif %}
         {% else %}
@@ -56,7 +56,7 @@
        <dl>
         <dt class="comments">Add Comment</dt>
         <dd class="rem_margin"><textarea id=comments name=comment rows=3 cols=40></textarea></dd>
-        <dd><input id="blog_id" name=blog_id value="{{ post.id }}" type=hidden></dd>
+        <dd><input id="post_id" name=post_id value="{{ post.id }}" type=hidden></dd>
         <dd class="rem_margin"><input id="btnPost" type=submit value=Post></dd>
        </dl>
     </form>

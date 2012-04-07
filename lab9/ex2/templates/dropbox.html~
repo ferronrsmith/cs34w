@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel = stylesheet type = "text/css" href = "/static/css/upload.css">
+    <script type = "text/javascript" src = "/static/js/jquery-1.7.2.js"> </script>
+    <script type = "text/javascript" src = "/static/js/upload.js">
+  </head>
+  <body>
+    <div id="drop_zone">Drop files here</div>
+    <output id="list"></output>​
+  </body>
+</html>

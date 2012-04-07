@@ -1,9 +1,6 @@
-__author__ = 'ferron'
-
-
 from datetime import datetime
 from functools import wraps
-from flask import g, request, redirect, url_for
+from flask import g, redirect, url_for
 
 def timesince(dt, default="just now"):
     """

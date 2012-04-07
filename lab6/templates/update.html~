@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+ {% block body %}
+ <form action="{{ url_for('update') }}" method=post class=add-entry enctype="multipart/form-data">
+    <dl>
+	{% if user %}
+      <dt>Username: 
+      <dd><input type=text size=30 name=username value="{{ user.username }}">
+      <dt>Fullname:
+      <dd><input type=text size=30 name=fullname value="{{ user.fullname }}">
+      <dt>Photo:
+      <dd><input type=file name=photo>
+      <dd><input type=submit value=Share>
+	{% else %}
+	  <h3> User not found...</h3>	
+	{% endif %}
+    </dl>
+  </form>
+  {% endblock %}

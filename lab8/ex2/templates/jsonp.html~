@@ -1,0 +1,22 @@
+<html>
+<head>
+    <script type = "text/javascript" src="/static/js/jquery-1.7.2.js"> </script>
+</head>
+<body>
+ <script type = "text/javascript">
+  $(function(){
+//    jQuery.getJSON('/hellojsonp?callback=log', function (data){
+//       console.log(data); 
+//   })
+
+    jQuery.getJSON('/hellojsonp?callback=log')
+
+  
+  function log(data){
+      console.log(data);
+  }
+
+  });
+ </script>
+</body>
+</html>

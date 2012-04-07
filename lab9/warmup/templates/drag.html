@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel = stylesheet href = "/static/css/drag.css" type = "text/css">
+    <script type = "text/javascript" src = "/static/js/jquery-1.7.2.js"> </script>
+    <script type = "text/javascript" src = "/static/js/drag.js"> </script>    
+    <script type = "text/javascript">
+      $(function(){
+	init();
+      });
+    </script>
+  </head>
+  <body>
+    <div id="columns">
+      <div class="column" draggable="true"><header>A</header></div>
+      <div class="column" draggable="true"><header>B</header></div>
+      <div class="column" draggable="true"><header>C</header></div>
+    </div>
+  </body>
+</html>
